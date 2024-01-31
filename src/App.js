@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios";
+import "./App.css";
+// import AxiosEx from "./Component/AxiosEx";
+import AxiosPost from "./Component/AxiosPost";
+// import FetchAPI from "./Component/FetchAPI";
+// import Query from "./Component/Query";
+// import SWRmethod from "./Component/SWRmethod";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+axios.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization = "This is from interceptor";
+    config.headers.FavColor = "Blue";
+
+    console.log(config);
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  (response) => {
+    return response.data;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+const App = () => {
+  return <AxiosPost />;
+};
 
 export default App;
